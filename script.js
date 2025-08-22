@@ -15,7 +15,6 @@ let resetBtn, verifyBtn, resultPara;
 let images = [];
 let selected = [];
 
-// Shuffle helper
 function shuffle(arr) {
   for (let i = arr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -24,7 +23,6 @@ function shuffle(arr) {
   return arr;
 }
 
-// Generate 6 images (5 unique + 1 duplicate)
 function generateImages() {
   container.innerHTML = "";
   if (resetBtn) resetBtn.remove();
@@ -46,6 +44,13 @@ function generateImages() {
     img.setAttribute("data-ns-test", cls);
     img.dataset.index = index;
 
+    // ✅ Add src so element is visible
+    img.src =
+      "https://via.placeholder.com/100"; // any placeholder image works
+
+    img.style.width = "100px"; // in case CSS not applied
+    img.style.height = "100px";
+
     img.addEventListener("click", () => handleClick(cls, index));
     container.appendChild(img);
   });
@@ -53,7 +58,7 @@ function generateImages() {
 
 function handleClick(cls, index) {
   if (selected.length === 2) return;
-  if (selected.some((s) => s.index === index)) return; // prevent double click
+  if (selected.some((s) => s.index === index)) return;
 
   selected.push({ cls, index });
 
@@ -67,7 +72,7 @@ function handleClick(cls, index) {
 
   if (selected.length === 2 && !verifyBtn) {
     verifyBtn = document.createElement("button");
-    verifyBtn.id = "btn"; // IMPORTANT: test expects #btn
+    verifyBtn.id = "btn"; // test expects #btn
     verifyBtn.innerText = "Verify";
     verifyBtn.onclick = handleVerify;
     body.appendChild(verifyBtn);
